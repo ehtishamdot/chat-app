@@ -3,8 +3,6 @@ const app = express();
 require("dotenv").config();
 const connectDB = require("./db/connect");
 require("./startup/routes")(app);
-const mongoose = require("mongoose");
-const messageModel = require("./models/Message");
 
 const server = require("http").createServer(app);
 
@@ -20,9 +18,14 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("we have new connection");
 
-  socket.on("pushMessage", async (data, callback) => {
-    const message = new messageModel(data);
-    socket.emit("getMessage ", chat);
+  socket.on("getMessage", async (data, callback) => {
+    console.log(data);
+    // const likes = await getAllLikes(data, null);
+    // socket.emit("getLikes", {
+    //   likes,
+    // });
+
+    callback();
   });
 });
 
@@ -35,15 +38,15 @@ io.on("connection", (socket) => {
 //     callback();
 //   });
 
-socket.on("getLikes", async (data, callback) => {
-  console.log(data);
-  const likes = await getAllLikes(data, null);
-  socket.emit("getLikes", {
-    likes,
-  });
+// socket.on("getLikes", async (data, callback) => {
+//   console.log(data);
+//   const likes = await getAllLikes(data, null);
+//   socket.emit("getLikes", {
+//     likes,
+//   });
 
-  callback();
-});
+//   callback();
+// });
 
 const port = process.env.PORT || 5000;
 

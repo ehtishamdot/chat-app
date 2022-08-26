@@ -43,5 +43,5 @@ UserSchema.methods.genrateToken = async function () {
   return await jwt.sign({ username: this.username }, process.env.JWT_SECRET);
 };
 
-const userModel = mongoose.model("User", UserSchema);
+const userModel = mongoose.model("user", UserSchema);
 module.exports = { userModel };
