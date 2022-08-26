@@ -1,0 +1,32 @@
+##user scenario:- (WHATSAPP CLONECHAT )
+1.1) sb saay pehlay login page aye ga( agr us nay register kiya ha to to login kr laay ga) 
+otherwise
+1.2) will jump to registration page.
+
+2.1) after registration users show ho jayein
+2.2) jb bi kisi user pr click karey ga pechli chat history bi fetch ho jaye gi.
+2.3) will be able to chat 
+
+3.1) jb msg usko bhjein gein to ussi time nzr ana chaye(realtime)
+3.2) should able to delete the message
+
+
+
+##############
+
+user Schema -> 
+
+username -> [string]
+name -> [string]
+password -> [string]
+image -> ?
+friend -> [array]
+
+
+messageSchema --> 
+
+to --> 
+from --> 
+date -->
+body -->
+
