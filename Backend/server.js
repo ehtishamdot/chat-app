@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
-require("dotenv").config();
 const connectDB = require("./db/connect");
+const { Message } = require("./models/Message");
+
+require("dotenv").config();
 require("./startup/routes")(app);
 
 const server = require("http").createServer(app);
@@ -15,16 +17,18 @@ const io = require("socket.io")(server, {
 // socket.on --> get the data
 // socket.emit --> post the data
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("we have new connection");
 
-  socket.on("getMessage", async (data, callback) => {
-    console.log(data);
-    // const likes = await getAllLikes(data, null);
-    // socket.emit("getLikes", {
-    //   likes,
-    // });
+  const allMessages = await Message.find();
+  socket.emit("getAllMessages", allMessages);
 
+  socket.on("pushMessage", async (data, callback) => {
+    console.log(data);
+    const message = new Message(data);
+    await message.save();
+
+    socket.emit("getMessage", message);
     callback();
   });
 });
