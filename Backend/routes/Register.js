@@ -8,11 +8,10 @@ router.post(
   "/",
   asyncWrapper(async (req, res) => {
     const { username } = req.body;
-    console.log(username);
     let user = await userModel.findOne({ username: username });
 
     console.log(user);
-    if (user) throw new Unauthorized("User already exit");
+    if (user) throw new Unauthorized("User already exist");
 
     user = new userModel(req.body);
     await user.genrateToken();

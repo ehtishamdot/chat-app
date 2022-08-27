@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 
+import "./Chat.css";
+
 import io from "socket.io-client";
+import Friends from "./Friends";
 import MessageForm from "./MessageForm";
 
 const ENDPOINT = "localhost:5000";
@@ -28,30 +31,31 @@ const Chat = () => {
     });
   };
 
-  const data = messages.map((message) => <p>{message.body}</p>);
+  const messageTO = messages.map((message) => (
+    <div className="message__to">
+      <span className="message__content">
+        <p>{message.body}</p>
+        <span>9:50pm seen</span>
+      </span>
+    </div>
+  ));
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%,-50%)",
-        border: "2px solid red",
-        padding: "1rem 2rem",
-        fontSize: "2rem",
-      }}
-    >
-      <h3>Name</h3>
-      <div
-        style={{
-          overflow: "scroll",
-          height: "80vh",
-        }}
-      >
-        {data}
+    <div className="chat">
+      <Friends />
+      <div className="chatbox">
+        <h3>Name</h3>
+        <div className="chatbox__messages">
+          {messageTO}
+          <div className="message__from">
+            <span className="message__content">
+              <p>Hello how are you</p>
+              <span>9:50pm seen</span>
+            </span>
+          </div>
+        </div>
+        <MessageForm getMessage={onSetMessageHandler} style={{}} />
       </div>
-      <MessageForm getMessage={onSetMessageHandler} style={{}} />
     </div>
   );
 };

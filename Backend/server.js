@@ -18,13 +18,10 @@ const io = require("socket.io")(server, {
 // socket.emit --> post the data
 
 io.on("connection", async (socket) => {
-  console.log("we have new connection");
-
   const allMessages = await Message.find();
   socket.emit("getAllMessages", allMessages);
 
   socket.on("pushMessage", async (data, callback) => {
-    console.log(data);
     const message = new Message(data);
     await message.save();
 
@@ -33,24 +30,10 @@ io.on("connection", async (socket) => {
   });
 });
 
-//   socket.on("updateLikes", async (data, callback) => {
-//     const likes = await updatePostLikes(data, null);
-//     socket.emit("updateLikes", {
-//       likes,
-//     });
-
-//     callback();
-//   });
-
-// socket.on("getLikes", async (data, callback) => {
-//   console.log(data);
-//   const likes = await getAllLikes(data, null);
-//   socket.emit("getLikes", {
-//     likes,
-//   });
-
-//   callback();
-// });
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
 
 const port = process.env.PORT || 5000;
 

@@ -10,15 +10,14 @@ router.post(
     const { username, password } = req.body;
     console.log(username, password);
     const user = await userModel.findOne({ username: username });
-    console.log(user);
-
     if (!user) throw new BadRequest("Invalid Username or Password");
 
     const validPassword = await user.comparePassword(password);
+    console.log(validPassword);
     if (!validPassword) throw new BadRequest("Invalid Username or Password");
 
     const token = await user.genrateToken();
-    res.send({ token });
+    res.header("x-auth-token", token).send({ token });
   })
 );
 module.exports = router;
