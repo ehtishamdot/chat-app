@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import Friends from "./Friends";
 import { MessageContext } from "../store/message-context";
 import MessageHeader from "./Message/MessageHeader";
+import Message from "./Message/Message";
 
 const ENDPOINT = "localhost:5000";
 
@@ -15,9 +16,13 @@ const Chat = () => {
   const messageCtx = useContext(MessageContext);
 
   return (
-    <div className="chat">
-      <Friends />
+    <div className="chatapp">
       <MessageHeader />
+      <section className="chatapp__body">
+        <Friends />
+        <Message />
+      </section>
+      <header />
     </div>
   );
 };

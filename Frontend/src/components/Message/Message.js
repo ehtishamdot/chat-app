@@ -46,7 +46,7 @@ const Message = (props) => {
   ));
 
   return (
-    <React.Fragment>
+    <section className="chatbox">
       <div className="chatbox__messages">
         {messageTo}
         <div className="message__from">
@@ -58,7 +58,7 @@ const Message = (props) => {
         <div ref={messagesEndRef} />
       </div>
       <MessageForm getMessage={onSetMessageHandler} style={{}} />
-    </React.Fragment>
+    </section>
   );
 };
 
