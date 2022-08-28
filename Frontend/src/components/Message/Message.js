@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./Message.css";
 
 import io from "socket.io-client";
 import MessageForm from "./MessageForm";
+import { AuthContext } from "../../store/auth-context";
 
 const ENDPOINT = "localhost:5000";
 
 const Message = (props) => {
+  const AuthCtx = useContext(AuthContext);
+
+  // AuthCtx.token
   const messagesEndRef = useRef(null);
-  const [messages, SetMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const socket = io(ENDPOINT);
 
@@ -20,19 +24,23 @@ const Message = (props) => {
 
   useEffect(() => {
     socket.on("getAllMessages", (messages) => {
-      SetMessages(messages);
+      setMessages(messages);
     });
   }, []);
 
   const onSetMessageHandler = (message) => {
-    socket.emit("pushMessage", { body: message }, (error) => {
-      if (error) {
-        alert(error);
+    socket.emit(
+      "pushMessageTo",
+      { body: message, from: "630995e7928bf4921a8f0e8e", to: AuthCtx.token },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
       }
-    });
+    );
 
-    socket.on("getMessage", (message) => {
-      SetMessages((prevMessage) => [...prevMessage, message]);
+    socket.on("getMessageTo", (message) => {
+      setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
 

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const connectDB = require("./db/connect");
 const { Message } = require("./models/Message");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 require("./startup/routes")(app);
@@ -21,11 +22,26 @@ io.on("connection", async (socket) => {
   const allMessages = await Message.find();
   socket.emit("getAllMessages", allMessages);
 
-  socket.on("pushMessage", async (data, callback) => {
+  socket.on("pushMessageTo", async (data, callback) => {
+    const token = data.to;
+    const sender = await jwt.decode(token, process.env.JWT_SECRET);
+    console.log(sender);
+    const message = new Message({
+      to: sender._id,
+      from: data.from,
+      body: data.body,
+    });
+    console.log(message);
+    await message.save();
+
+    socket.emit("getMessageTo", message);
+    callback();
+  });
+  socket.on("pushMessageFrom", async (data, callback) => {
     const message = new Message(data);
     await message.save();
 
-    socket.emit("getMessage", message);
+    socket.emit("getMessageFrom", message);
     callback();
   });
 });
