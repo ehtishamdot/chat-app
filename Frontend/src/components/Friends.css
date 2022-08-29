@@ -3,6 +3,7 @@
   height: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   overflow-y: scroll;
+  padding-left: 1rem;
 }
 
 .friends__list__item {
@@ -10,7 +11,7 @@
   height: 5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 1rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

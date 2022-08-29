@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const connectDB = require("./db/connect");
 const { Message } = require("./models/Message");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+
+const connection = mongoose.connection;
 
 require("dotenv").config();
 require("./startup/routes")(app);
@@ -22,7 +25,7 @@ io.on("connection", async (socket) => {
   const allMessages = await Message.find();
   socket.emit("getAllMessages", allMessages);
 
-  socket.on("pushMessageTo", async (data, callback) => {
+  socket.on("pushMessage", async (data, callback) => {
     const token = data.to;
     const sender = await jwt.decode(token, process.env.JWT_SECRET);
     console.log(sender);
@@ -34,15 +37,29 @@ io.on("connection", async (socket) => {
     console.log(message);
     await message.save();
 
-    socket.emit("getMessageTo", message);
+    socket.emit("getMessage", message);
     callback();
   });
-  socket.on("pushMessageFrom", async (data, callback) => {
-    const message = new Message(data);
-    await message.save();
+});
 
-    socket.emit("getMessageFrom", message);
-    callback();
+connection.once("open", () => {
+  console.log("connected to server");
+
+  const messagesChangeStream = connection.collection("messages").watch();
+
+  messagesChangeStream.on("change", async (change) => {
+    switch (change.operationType) {
+      case "insert":
+        const message = {
+          _id: change.fullDocument._id,
+          from: change.fullDocument.from,
+          to: change.fullDocument.to,
+          body: change.fullDocument.body,
+        };
+
+        io.emit("pushMessage", message);
+        break;
+    }
   });
 });
 

@@ -30,7 +30,7 @@ const Message = (props) => {
 
   const onSetMessageHandler = (message) => {
     socket.emit(
-      "pushMessageTo",
+      "pushMessage",
       { body: message, from: "630995e7928bf4921a8f0e8e", to: AuthCtx.token },
       (error) => {
         if (error) {
@@ -39,19 +39,20 @@ const Message = (props) => {
       }
     );
 
-    socket.on("getMessageTo", (message) => {
+    socket.on("getMessage", (message) => {
       setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
 
   const messageTo = messages.map((message) => (
-    <div className="message__to">
+    <div key={message._id} className="message__to">
       <span className="message__content">
         <p>{message.body}</p>
         <span>9:50pm seen</span>
       </span>
     </div>
   ));
+  console.log(messages);
 
   return (
     <section className="chatbox">
