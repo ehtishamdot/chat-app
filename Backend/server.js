@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./db/connect");
-const { Message } = require("./models/Message");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 
 const connection = mongoose.connection;
 
@@ -11,61 +9,39 @@ require("dotenv").config();
 require("./startup/routes")(app);
 
 const server = require("http").createServer(app);
-
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:3000",
   },
+});
+
+io.of("/api/socket").on("connection", (socket) => {
+  console.log("socket.io: User connected: ", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("socket.io: User disconnected: ", socket.id);
+  });
 });
 
 // socket.on --> get the data
 // socket.emit --> post the data
 
-io.on("connection", async (socket) => {
-  const allMessages = await Message.find();
-  socket.emit("getAllMessages", allMessages);
-
-  socket.on("pushMessage", async (data, callback) => {
-    const token = data.to;
-    const sender = await jwt.decode(token, process.env.JWT_SECRET);
-    console.log(sender);
-    const message = new Message({
-      to: sender._id,
-      from: data.from,
-      body: data.body,
-    });
-    console.log(message);
-    await message.save();
-
-    socket.emit("getMessage", message);
-    callback();
-  });
-});
-
-connection.once("open", () => {
-  console.log("connected to server");
+connection.once("open", async () => {
+  console.log("Connected to Stream");
+  // const allMessages = await Message.find();
+  // socket.emit("getAllMessages", allMessages);
 
   const messagesChangeStream = connection.collection("messages").watch();
-
   messagesChangeStream.on("change", async (change) => {
+    console.log("running oh");
     switch (change.operationType) {
       case "insert":
-        const message = {
-          _id: change.fullDocument._id,
-          from: change.fullDocument.from,
-          to: change.fullDocument.to,
-          body: change.fullDocument.body,
-        };
-
-        io.emit("pushMessage", message);
+        console.log(change.fullDocument);
+        const data = change.fullDocument;
+        io.of("/api/socket").emit("getMessage", data);
         break;
     }
   });
-});
-
-app.use(function (req, res, next) {
-  req.io = io;
-  next();
 });
 
 const port = process.env.PORT || 5000;

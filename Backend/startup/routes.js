@@ -12,7 +12,7 @@ module.exports = (app) => {
 
   //end points will be here
   app.use("/api/v1/addfriend", addFriend);
-  app.use("/api/v1/message", message);
+  app.use("/api/v1/messages", message);
   app.use("/api/v1/login", login);
   app.use("/api/v1/register", register);
 
