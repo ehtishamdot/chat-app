@@ -36,9 +36,7 @@ connection.once("open", async () => {
     console.log("running oh");
     switch (change.operationType) {
       case "insert":
-        console.log(change.fullDocument);
-        const data = change.fullDocument;
-        io.of("/api/socket").emit("getMessage", data);
+        io.of("/api/socket").volatile.emit("newMessage", change.fullDocument);
         break;
     }
   });

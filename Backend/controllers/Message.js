@@ -11,8 +11,8 @@ const sendMessage = asyncWrapper(async (req, res) => {
   const token = req.body.token;
   const sender = await jwt.decode(token, process.env.JWT_SECRET);
   const message = new Message({
-    to: sender._id,
-    from: req.body.from,
+    from: sender._id,
+    to: req.body.to,
     body: req.body.body,
   });
 

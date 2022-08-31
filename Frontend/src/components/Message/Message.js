@@ -4,7 +4,6 @@ import "./Message.css";
 import io from "socket.io-client";
 import MessageForm from "./MessageForm";
 import { AuthContext } from "../../store/auth-context";
-
 const ENDPOINT = "localhost:5000/api/socket";
 
 const Message = (props) => {
@@ -33,11 +32,29 @@ const Message = (props) => {
     }
   };
 
+  const getUser = async () => {
+    const res = await fetch("http://localhost:5000/api/v1/getUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+    });
+
+    const user = await res.json();
+    console.log(user);
+    AuthCtx.getUser(user);
+  };
+
   useEffect(() => {
     getMessages();
+    getUser();
   }, []);
 
   const onSetMessageHandler = async (message) => {
+    console.log(AuthCtx.currentUser._id);
     await fetch("http://localhost:5000/api/v1/messages", {
       method: "POST", // or 'PUT'
       headers: {
@@ -45,12 +62,13 @@ const Message = (props) => {
       },
       body: JSON.stringify({
         body: message,
-        from: "630995e7928bf4921a8f0e8e",
+        from: AuthCtx.currentUser._id,
+        to: "630dad7ae0c31e2f1c25be7c",
         token: AuthCtx.token,
       }),
     });
 
-    socket.on("getMessage", (message) => {
+    socket.on("newMessage", (message) => {
       console.log(message);
       setMessages((prevMessage) => [...prevMessage, message]);
     });
@@ -62,7 +80,14 @@ const Message = (props) => {
         self.findIndex((msg) => msg._id === message._id) === pos
     )
     .map((message) => (
-      <div key={message._id} className="message__to">
+      <div
+        key={message._id}
+        className={`${
+          AuthCtx.currentUser._id === message.from
+            ? "message__to"
+            : "message__from"
+        }`}
+      >
         <span className="message__content">
           <p>{message.body}</p>
           <span>9:50pm seen</span>
@@ -74,13 +99,6 @@ const Message = (props) => {
     <section className="chatbox">
       <div className="chatbox__messages">
         {messageTo}
-
-        <div className="message__from">
-          <span className="message__content">
-            <p>Hello how are you</p>
-            <span>9:50pm seen</span>
-          </span>
-        </div>
         <div ref={messagesEndRef} />
       </div>
       <MessageForm getMessage={onSetMessageHandler} style={{}} />
