@@ -41,7 +41,7 @@ UserSchema.pre("save", async function () {
 
 UserSchema.methods.genrateToken = async function () {
   return await jwt.sign(
-    { username: this.username, _id: this._id },
+    { username: this.username, _id: this._id, name: this.name },
     process.env.JWT_SECRET
   );
 };

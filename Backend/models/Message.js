@@ -22,6 +22,18 @@ const messageSchema = new mongoose.Schema({
   },
 });
 
-const Message = mongoose.model("messages", messageSchema);
+const chatSchema = new mongoose.Schema({
+  senderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  recieverId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  message: messageSchema,
+});
+
+const Message = mongoose.model("messages", chatSchema);
 
 module.exports = { Message };

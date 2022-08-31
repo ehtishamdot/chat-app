@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../store/auth-context";
 import "./Friends.css";
 
@@ -25,17 +26,21 @@ const Friends = () => {
 
   return (
     <div className="friends__list">
-      {users.map((user) => (
-        <div className="friends__list__item">
-          <div className="friend__img">
-            <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-          </div>
-          <div className="friend_info">
-            <span>{user.name}</span>
-            <button>Add Friend</button>
-          </div>
-        </div>
-      ))}
+      {users
+        .filter((user) => user._id !== AuthCtx.currentUser._id)
+        .map((user) => (
+          <Link key={user._id} to={`${user._id}`}>
+            <div className="friends__list__item">
+              <div className="friend__img">
+                <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+              </div>
+              <div className="friend_info">
+                <span>{user.name}</span>
+                <button>Add Friend</button>
+              </div>
+            </div>
+          </Link>
+        ))}
     </div>
   );
 };

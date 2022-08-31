@@ -7,6 +7,7 @@ import Friends from "./Friends";
 import { MessageContext } from "../store/message-context";
 import MessageHeader from "./Message/MessageHeader";
 import Message from "./Message/Message";
+import { Outlet } from "react-router-dom";
 
 const ENDPOINT = "localhost:5000";
 
@@ -20,7 +21,7 @@ const Chat = () => {
       <MessageHeader />
       <section className="chatapp__body">
         <Friends />
-        <Message />
+        <Outlet />
       </section>
       <header />
     </div>

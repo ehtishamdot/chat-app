@@ -1,23 +1,32 @@
 const asyncWrapper = require("../middleware/async");
 const { Message } = require("../models/Message");
-const jwt = require("jsonwebtoken");
 
 const getMessages = asyncWrapper(async (req, res) => {
-  const messages = await Message.find({});
+  const { senderId, recieverId } = req.params;
+  console.log(senderId, recieverId);
+  const messages = await Message.find({
+    $or: [
+      {
+        recieverId: recieverId,
+        senderId: senderId,
+      },
+      {
+        recieverId: senderId,
+        senderId: recieverId,
+      },
+    ],
+  });
   res.send(messages);
+
+  // const messages = await Message.find({
+  //   recieverId: recieverId,
+  //   senderId: senderId,
+  // }).or([{ recieverId: senderId, senderID: recieverId }]);
 });
 
 const sendMessage = asyncWrapper(async (req, res) => {
-  const token = req.body.token;
-  const sender = await jwt.decode(token, process.env.JWT_SECRET);
-  const message = new Message({
-    from: sender._id,
-    to: req.body.to,
-    body: req.body.body,
-  });
-
+  const message = new Message(req.body);
   await message.save();
-
   res.send(message);
 });
 

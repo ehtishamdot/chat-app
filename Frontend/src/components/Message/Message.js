@@ -4,12 +4,13 @@ import "./Message.css";
 import io from "socket.io-client";
 import MessageForm from "./MessageForm";
 import { AuthContext } from "../../store/auth-context";
+import { useParams } from "react-router-dom";
 const ENDPOINT = "localhost:5000/api/socket";
 
 const Message = (props) => {
   const AuthCtx = useContext(AuthContext);
+  const { id: userId } = useParams();
 
-  // AuthCtx.token
   const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState([]);
 
@@ -20,10 +21,12 @@ const Message = (props) => {
   };
 
   useEffect(scrollToBottom, [messages]);
-
+  console.log("runign yo");
   const getMessages = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/v1/messages");
+      const res = await fetch(
+        `http://localhost:5000/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
+      );
       const data = await res.json();
       console.log(data);
       setMessages(data);
@@ -32,26 +35,9 @@ const Message = (props) => {
     }
   };
 
-  const getUser = async () => {
-    const res = await fetch("http://localhost:5000/api/v1/getUser", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-    });
-
-    const user = await res.json();
-    console.log(user);
-    AuthCtx.getUser(user);
-  };
-
   useEffect(() => {
     getMessages();
-    getUser();
-  }, []);
+  }, [userId]);
 
   const onSetMessageHandler = async (message) => {
     console.log(AuthCtx.currentUser._id);
@@ -61,10 +47,13 @@ const Message = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        body: message,
-        from: AuthCtx.currentUser._id,
-        to: "630dad7ae0c31e2f1c25be7c",
-        token: AuthCtx.token,
+        senderId: AuthCtx.currentUser._id,
+        recieverId: userId,
+        message: {
+          body: message,
+          from: AuthCtx.currentUser._id,
+          to: userId,
+        },
       }),
     });
 
@@ -75,25 +64,29 @@ const Message = (props) => {
   };
 
   const messageTo = messages
-    .filter(
+    ?.filter(
       (message, pos, self) =>
         self.findIndex((msg) => msg._id === message._id) === pos
     )
-    .map((message) => (
-      <div
-        key={message._id}
-        className={`${
-          AuthCtx.currentUser._id === message.from
-            ? "message__to"
-            : "message__from"
-        }`}
-      >
-        <span className="message__content">
-          <p>{message.body}</p>
-          <span>9:50pm seen</span>
-        </span>
-      </div>
-    ));
+    .map((chat) => {
+      console.log(chat.message);
+
+      return (
+        <div
+          key={chat._id}
+          className={`${
+            AuthCtx.currentUser._id === chat.message.from
+              ? "message__to"
+              : "message__from"
+          }`}
+        >
+          <span className="message__content">
+            <p>{chat.message.body}</p>
+            <span>{chat.message.date}</span>
+          </span>
+        </div>
+      );
+    });
 
   return (
     <section className="chatbox">
