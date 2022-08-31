@@ -6,6 +6,7 @@ const login = require("../routes/Login");
 const register = require("../routes/Register");
 const addFriend = require("../routes/addFriend");
 const getUser = require("../routes/getUser");
+const getAllUsers = require("../routes/User");
 
 module.exports = (app) => {
   app.use(cors());
@@ -17,6 +18,7 @@ module.exports = (app) => {
   app.use("/api/v1/messages", message);
   app.use("/api/v1/login", login);
   app.use("/api/v1/register", register);
+  app.use("/api/v1/getAllUsers", getAllUsers);
 
   app.use(errorHandlerMiddleware);
 };

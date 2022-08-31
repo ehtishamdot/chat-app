@@ -9,7 +9,7 @@ router.get(
   Auth,
   asyncWrapper(async (req, res) => {
     const friends = await userModel.find(req.user).select({ friends: 1 });
-    res.send(friends);
+    res.send(friends);  
   })
 );
 router.post(
