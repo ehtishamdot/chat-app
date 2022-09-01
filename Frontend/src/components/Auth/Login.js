@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
+import jwtDecode from "jwt-decode";
 import "./Login.css";
 
 const Login = (props) => {
@@ -34,6 +35,9 @@ const Login = (props) => {
 
     if (token !== undefined && token) {
       AuthCtx.login(token);
+      const user = await jwtDecode(token);
+      console.log(user);
+      AuthCtx.getUser(user);
       navigate("/chat");
     }
   };

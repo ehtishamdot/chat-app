@@ -21,8 +21,28 @@ const retrieveStoredToken = () => {
   };
 };
 
+const retrieveStoredUserInfo = () => {
+  const storedUserInfo = JSON.parse(localStorage.getItem("user-info"));
+
+  console.log(storedUserInfo);
+
+  if (!storedUserInfo) {
+    return null;
+  }
+
+  return {
+    userInfo: storedUserInfo,
+  };
+};
+
 const AuthContextProvider = (props) => {
   const tokenDate = retrieveStoredToken();
+  const storedUserInfo = retrieveStoredUserInfo();
+
+  let initialUserInfo;
+  if (initialUserInfo) {
+    initialUserInfo = storedUserInfo.userInfo;
+  }
 
   let initialToken;
   if (tokenDate) {
@@ -30,7 +50,7 @@ const AuthContextProvider = (props) => {
   }
 
   const [token, setToken] = useState(initialToken);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(initialUserInfo);
 
   const userIsLoggedIn = !!token;
 
@@ -47,7 +67,10 @@ const AuthContextProvider = (props) => {
   };
 
   const currentUserHandler = (user) => {
-    if (user) setUser(user);
+    if (user) {
+      setUser(user);
+      localStorage.setItem("user-info", JSON.stringify(user));
+    }
   };
 
   const contextValue = {
