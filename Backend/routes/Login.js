@@ -17,6 +17,7 @@ router.post(
     if (!validPassword) throw new BadRequest("Invalid Username or Password");
 
     const token = await user.genrateToken();
+    console.log(token);
     res.header("x-auth-token", token).send({ token });
   })
 );

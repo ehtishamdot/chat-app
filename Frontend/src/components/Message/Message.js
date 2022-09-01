@@ -58,8 +58,6 @@ const Message = (props) => {
     });
 
     socket.on("newMessage", (message) => {
-      
-      console.log(message);
       setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
