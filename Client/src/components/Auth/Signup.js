@@ -36,13 +36,16 @@ const Signup = () => {
     console.log(inputState);
 
     const postUser = async () => {
-      const rawResponse = await fetch("http://localhost:5000/api/v1/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...inputState }),
-      });
+      const rawResponse = await fetch(
+        "https://ssuetchatting.herokuapp.com/api/v1/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...inputState }),
+        }
+      );
       const data = await rawResponse.json();
       console.log(data);
       if (data.msg) {

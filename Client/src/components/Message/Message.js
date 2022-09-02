@@ -6,7 +6,7 @@ import MessageForm from "./MessageForm";
 import { AuthContext } from "../../store/auth-context";
 import { useParams } from "react-router-dom";
 import MessageHeader from "./MessageHeader";
-const ENDPOINT = "localhost:5000/api/socket";
+const ENDPOINT = "https://ssuetchatting.herokuapp.com/api/socket";
 
 const Message = () => {
   const AuthCtx = useContext(AuthContext);
