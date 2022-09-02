@@ -30,7 +30,7 @@ const Message = (props) => {
       );
       const data = await res.json();
       console.log(data);
-      setMessages(data.message);
+      setMessages(data);
     } catch (error) {
       alert(error);
     }
@@ -64,36 +64,35 @@ const Message = (props) => {
     });
   };
 
-  // ?.filter(
-  //   (message, pos, self) =>
-  //     self.findIndex((msg) => msg._id === message._id) === pos
-  // )
-
-  const messageTo = messages.map((message, i) => {
-    console.log(message);
-
-    return (
-      <div
-        key={i}
-        className={`${
-          AuthCtx.currentUser._id === message.from
-            ? "message__from"
-            : "message__to"
-        }`}
-      >
-        <div className="message__content">
-          <p>{message.body}</p>
-          <span className="message__time">
-            {new Date(message.date).toLocaleString("en-US", {
-              hour: "numeric",
-              hour12: true,
-              minute: "numeric",
-            })}
-          </span>
+  const messageTo = messages
+    ?.filter(
+      (message, pos, self) =>
+        self.findIndex((msg) => msg._id === message._id) === pos
+    )
+    .map((message, i) => {
+      console.log(message);
+      return (
+        <div
+          key={i}
+          className={`${
+            AuthCtx.currentUser._id === message.from
+              ? "message__from"
+              : "message__to"
+          }`}
+        >
+          <div className="message__content">
+            <p>{message.body}</p>
+            <span className="message__time">
+              {new Date(message.date).toLocaleString("en-US", {
+                hour: "numeric",
+                hour12: true,
+                minute: "numeric",
+              })}
+            </span>
+          </div>
         </div>
-      </div>
-    );
-  });
+      );
+    });
 
   return (
     <section className="chatbox">

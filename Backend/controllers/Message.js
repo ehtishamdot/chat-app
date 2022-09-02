@@ -23,6 +23,8 @@ const getMessages = asyncWrapper(async (req, res) => {
     chatId: chat._id,
   });
 
+  console.log(  );
+
   res.send(messages);
 
   // .sort({ date: -1 })
