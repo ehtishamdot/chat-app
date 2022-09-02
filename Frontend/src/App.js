@@ -11,6 +11,7 @@ import Chat from "./components/Chat";
 import Login from "./components/Auth/Login";
 import { AuthContext } from "./store/auth-context";
 import Message from "./components/Message/Message";
+import Signup from "./components/Auth/Signup";
 
 const App = () => {
   const AuthCtx = useContext(AuthContext);
@@ -28,6 +29,7 @@ const App = () => {
           <Route path=":chatId/:userId" element={<Message />} />
         </Route>
         <Route path="login" element={!AuthCtx.isLoggedIn && <Login />} />
+        <Route path="signup" element={<Signup />} />
       </Routes>
     </Router>
   );

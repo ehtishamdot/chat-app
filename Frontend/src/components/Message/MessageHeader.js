@@ -23,7 +23,7 @@ const MessageHeader = (props) => {
 
   return (
     <div className="chat__header">
-      <span>{userInfo?.name}</span>
+      <span>{`Chatting with ${userInfo?.name}...`}</span>
     </div>
   );
 };

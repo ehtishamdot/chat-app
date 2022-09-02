@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
 import jwtDecode from "jwt-decode";
 import "./Login.css";
@@ -79,10 +79,12 @@ const Login = (props) => {
           </form>
         </div>
       </div>
-      <footer className="footer">
-        <p>If you don't have id then</p>
-        <a href="./signin.html">Sign Up</a>
-      </footer>
+      <Link to={`/signup`}>
+        <footer className="footer">
+          <p>Don't have account?</p>
+          <a href="./signin.html">Sign Up</a>
+        </footer>
+      </Link>
     </div>
   );
 };
