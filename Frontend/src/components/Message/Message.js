@@ -59,7 +59,11 @@ const Message = () => {
     });
 
     socket.on("newMessage", (message) => {
-      if (message.chatId)
+      console.log(message.to, userId);
+      if (
+        chatId === message.chatId &&
+        (message.to === userId || message.from === userId)
+      )
         setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
