@@ -12,6 +12,8 @@ const AuthContext = React.createContext({
 const retrieveStoredToken = () => {
   const storedToken = localStorage.getItem("token");
 
+  
+
   if (!storedToken) {
     return null;
   }

@@ -1,8 +1,12 @@
-import React, { useReducer, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useReducer, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../store/auth-context";
 
 const Signup = () => {
   const [error, setError] = useState("");
+
+  const AuthCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const signupReducer = (state, action) => {
     return {
@@ -12,7 +16,7 @@ const Signup = () => {
   };
 
   const [inputState, dispatch] = useReducer(signupReducer, {
-    email: "",
+    name: "",
     username: "",
     password: "",
   });
@@ -28,6 +32,8 @@ const Signup = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
+    console.log(inputState);
+
     const postUser = async () => {
       const rawResponse = await fetch("http://localhost:5000/api/v1/register", {
         method: "POST",
@@ -41,75 +47,60 @@ const Signup = () => {
       if (data.msg) {
         setError(data.msg);
       }
+
+      if (data.token) {
+        AuthCtx.login(data.token);
+        navigate("/chat");
+      }
     };
     postUser();
   };
 
   return (
     <React.Fragment>
-      <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-        <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
-            Sign in
-          </h1>
-          <form onSubmit={onSubmitHandler} className="mt-6">
-            <div className="mb-2">
-              <label
-                for="username"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Username
-              </label>
+      <div className="Main">
+        <div className="title">
+          <h1 clas=" welcome">Welcome</h1>
+          <div className="banner">
+            <h1>Signup</h1>
+          </div>
+        </div>
+
+        <div className="form">
+          <div>
+            <form action="Post" onSubmit={onSubmitHandler}>
               <input
+                type="text"
                 onChange={onChangeHandler}
-                type={"text"}
                 name="username"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
-              <label
-                for="email"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Email
-              </label>
+                className="email"
+                placeholder="username.."
+              ></input>
+              <input
+                type="text"
+                onChange={onChangeHandler}
+                name="name"
+                className="email"
+                placeholder="name.."
+              ></input>
               <input
                 onChange={onChangeHandler}
-                type="email"
-                name="email"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                for="password"
-                className="block text-sm font-semibold text-gray-800"
-              >
-                Password
-              </label>
-              <input
-                onChange={onChangeHandler}
-                type="password"
                 name="password"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
-            </div>
-            <a href="#" className="text-xs text-purple-600 hover:underline">
-              Forget Password?
-            </a>
-            <div className="mt-6">
-              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-                {!error ? "Signup" : error}
-              </button>
-            </div>
-          </form>
+                className="email"
+                id="password"
+                type="password"
+                placeholder="Password.."
+              ></input>
 
-          <p className="mt-8 text-xs font-light text-center text-gray-700">
-            <Link to={`/login`}> Already have a account? </Link>
-
-            <a href="#" className="font-medium text-purple-600 hover:underline">
-              Sign up
-            </a>
-          </p>
+              <button className="button">Signup</button>
+              <Link to={`/login`}>
+                <footer className="footer">
+                  <p>Already have account?</p>
+                  <p> Login In</p>
+                </footer>
+              </Link>
+            </form>
+          </div>
         </div>
       </div>
     </React.Fragment>

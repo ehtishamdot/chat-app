@@ -4,9 +4,11 @@ import { AuthContext } from "../../store/auth-context";
 import jwtDecode from "jwt-decode";
 import "./Login.css";
 
-const Login = (props) => {
+const Login = () => {
   const AuthCtx = useContext(AuthContext);
+
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

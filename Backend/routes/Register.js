@@ -14,11 +14,11 @@ router.post(
     if (user) throw new Unauthorized("User already exist");
 
     user = new userModel(req.body);
-    await user.genrateToken();
+    const token = await user.genrateToken();
 
     await user.save();
 
-    res.send({ user });
+    res.send({ user, token });
   })
 );
 
