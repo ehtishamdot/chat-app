@@ -2,6 +2,7 @@ const express = require("express");
 const errorHandlerMiddleware = require("../middleware/error-handler");
 var cors = require("cors");
 const message = require("../routes/Message");
+const chat = require("../routes/Chat");
 const login = require("../routes/Login");
 const register = require("../routes/Register");
 const addFriend = require("../routes/addFriend");
@@ -16,6 +17,7 @@ module.exports = (app) => {
   app.use("/api/v1/getUser", getUser);
   app.use("/api/v1/addfriend", addFriend);
   app.use("/api/v1/messages", message);
+  app.use("/api/v1/chat", chat);
   app.use("/api/v1/login", login);
   app.use("/api/v1/register", register);
   app.use("/api/v1/users", getAllUsers);

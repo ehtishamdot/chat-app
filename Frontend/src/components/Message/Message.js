@@ -8,9 +8,9 @@ import { useParams } from "react-router-dom";
 import MessageHeader from "./MessageHeader";
 const ENDPOINT = "localhost:5000/api/socket";
 
-const Message = (props) => {
+const Message = () => {
   const AuthCtx = useContext(AuthContext);
-  const { id: userId } = useParams();
+  const { chatId, userId } = useParams();
 
   const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState([]);
@@ -24,6 +24,7 @@ const Message = (props) => {
   useEffect(scrollToBottom, [messages]);
   console.log("runign yo");
   const getMessages = async () => {
+    console.log(userId);
     try {
       const res = await fetch(
         `http://localhost:5000/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
@@ -41,7 +42,6 @@ const Message = (props) => {
   }, [userId]);
 
   const onSetMessageHandler = async (message) => {
-    console.log(AuthCtx.currentUser._id);
     await fetch("http://localhost:5000/api/v1/messages", {
       method: "POST", // or 'PUT'
       headers: {
@@ -59,8 +59,8 @@ const Message = (props) => {
     });
 
     socket.on("newMessage", (message) => {
-      console.log(message);
-      setMessages((prevMessage) => [...prevMessage, message]);
+      if (message.chatId)
+        setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
 

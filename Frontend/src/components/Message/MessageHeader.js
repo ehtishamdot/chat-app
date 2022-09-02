@@ -5,7 +5,7 @@ import "./MessageHeader.css";
 const MessageHeader = (props) => {
   const [userInfo, setUserInfo] = useState();
 
-  const { id: userId } = useParams();
+  const { userId } = useParams();
   console.log(userId);
 
   const getCurrentUser = async () => {

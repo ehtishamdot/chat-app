@@ -25,7 +25,7 @@ const App = () => {
           }
         />
         <Route path="chat" element={AuthCtx.isLoggedIn && <Chat />}>
-          <Route path=":id" element={<Message />} />
+          <Route path=":chatId/:userId" element={<Message />} />
         </Route>
         <Route path="login" element={!AuthCtx.isLoggedIn && <Login />} />
       </Routes>
