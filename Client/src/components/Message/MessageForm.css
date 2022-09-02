@@ -1,0 +1,15 @@
+form {
+}
+
+form input {
+  width: 100%;
+  padding: 0.4rem 0.2rem;
+  border: 1px solid rgb(203, 198, 198);
+  font-size: 1.3rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+input[type="text"] {
+  width: calc(100% - 6px);
+}

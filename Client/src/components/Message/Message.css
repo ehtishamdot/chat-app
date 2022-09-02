@@ -1,0 +1,109 @@
+.chatbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.chatbox__messages {
+  background: white;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background: url("https://i.pinimg.com/600x315/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg");
+  align-items: center;
+  justify-content: start;
+}
+
+.chatbox__messages::-webkit-scrollbar {
+  width: .5em;
+}
+
+.chatbox__messages::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.chatbox__messages::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.chatbox__messages__list {
+  width: 90%;
+}
+
+.message__to,
+.message__from {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem 0.5rem;
+}
+.message__content {
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  padding: 0.7rem 0.4rem;
+  font-size: 1.3rem;
+  position: relative;
+}
+
+.message__to {
+  align-items: start;
+}
+
+.message__from {
+  align-items: end;
+}
+
+.message__to .message__content {
+  background: white;
+  color: black;
+}
+
+.message__from .message__content {
+  background: #d9fdd3;
+  color: black;
+}
+
+.message__from .message__content:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-left-color: #d9fdd3;
+  border-right: 0;
+  border-top: 0;
+  margin-top: -10px;
+  margin-right: -13px;
+}
+
+.message__to .message__content:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: white;
+  border-left: 0;
+  border-top: 0;
+  margin-top: -10px;
+  margin-left: -13px;
+}
+
+.message__content p {
+  word-break: break-all;
+  margin-right: 4rem;
+}
+
+.message__time {
+  font-size: 0.88rem;
+  display: flex;
+  justify-content: flex-end;
+}

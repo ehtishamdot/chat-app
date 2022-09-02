@@ -1,0 +1,84 @@
+.Main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 390px;
+  height: 600px;
+  border: 2px solid aliceblue;
+  color: #333;
+  box-shadow: 10px 10px 5px;
+}
+.title {
+  padding: 55px 55px 33px;
+  text-align: center;
+}
+.welcome {
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+}
+.banner {
+  background-color: #333;
+  position: relative;
+  left: 25%;
+  color: white;
+  width: 125px;
+  padding: 5px;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+.form {
+  display: block;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.email {
+  display: block;
+  margin-top: 40px;
+  border-top: 0;
+  border-left: 0px;
+  border-right: 0px;
+  font-size: 15px;
+  width: 300px;
+}
+.email:focus {
+  outline: none;
+}
+.button__login {
+  margin-top: 66px;
+  font-size: 15px;
+  height: 30px;
+  border: 0px;
+  width: 300px;
+  color: white;
+  background: rgba(252, 69, 240, 0.4707692307692307);
+  background: linear-gradient(
+    90deg,
+    rgba(252, 69, 240, 0.4707692307692307) 0%,
+    rgba(204, 29, 253, 0.6984615384615385) 50%,
+    rgba(131, 58, 180, 1) 100%
+  );
+  border-radius: 15px;
+  cursor: pointer;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 35px;
+}
+a {
+  padding-left: 8px;
+  color: #333;
+  font-weight: bolder;
+}
+
+.error{
+  text-align: center;
+  font-size: 1rem;
+  font-weight: lighter;
+  color: red;
+}
