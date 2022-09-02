@@ -3,7 +3,7 @@
     "start": "nodemon server.js",
     "build": "cd Client && npm run build",
     "install-client": "cd Client && npm install",
-    "heroko-postbuild": "npm run install-client && npm run build"
+    "heroku-postbuild": "cd Client && npm install && npm run build"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
