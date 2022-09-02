@@ -18,7 +18,11 @@
     "lodash": "^4.17.21",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.3",
+    "node": "^16.17.0",
     "nodemon": "^2.0.19",
     "socket.io": "^4.5.1"
+  },
+  "engines": {
+    "node": "16.16.0"
   }
 }
