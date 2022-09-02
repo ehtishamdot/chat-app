@@ -26,7 +26,7 @@ const Message = () => {
   const getMessages = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
+        `https://ssuetchatting.herokuapp.com/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
       );
       const data = await res.json();
       setMessages(data);
@@ -40,7 +40,7 @@ const Message = () => {
   }, [userId, chatId]);
 
   const onSetMessageHandler = async (message) => {
-    await fetch("http://localhost:5000/api/v1/messages", {
+    await fetch("https://ssuetchatting.herokuapp.com/api/v1/messages", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
