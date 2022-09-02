@@ -48,8 +48,8 @@
 .email:focus {
   outline: none;
 }
-.button {
-  margin-top: 45px;
+.button__login {
+  margin-top: 66px;
   font-size: 15px;
   height: 30px;
   border: 0px;
@@ -74,4 +74,11 @@ a {
   padding-left: 8px;
   color: #333;
   font-weight: bolder;
+}
+
+.error{
+  text-align: center;
+  font-size: 1rem;
+  font-weight: lighter;
+  color: red;
 }

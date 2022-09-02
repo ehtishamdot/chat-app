@@ -1,6 +1,7 @@
 import React, { useContext, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
+import "./Signup.css";
 
 const Signup = () => {
   const [error, setError] = useState("");
@@ -56,11 +57,15 @@ const Signup = () => {
     postUser();
   };
 
+  setTimeout(() => setError(null), [7000]);
+
   return (
     <React.Fragment>
       <div className="Main">
         <div className="title">
-          <h1 clas=" welcome">Welcome</h1>
+          <h1 className={error ? "error" : "welcome"}>
+            {error ? error : "Welcome"}
+          </h1>
           <div className="banner">
             <h1>Signup</h1>
           </div>
@@ -73,6 +78,7 @@ const Signup = () => {
                 type="text"
                 onChange={onChangeHandler}
                 name="username"
+                required
                 className="email"
                 placeholder="username.."
               ></input>
@@ -80,6 +86,7 @@ const Signup = () => {
                 type="text"
                 onChange={onChangeHandler}
                 name="name"
+                required
                 className="email"
                 placeholder="name.."
               ></input>
@@ -88,6 +95,7 @@ const Signup = () => {
                 name="password"
                 className="email"
                 id="password"
+                required
                 type="password"
                 placeholder="Password.."
               ></input>
@@ -96,7 +104,6 @@ const Signup = () => {
               <Link to={`/login`}>
                 <footer className="footer">
                   <p>Already have account?</p>
-                  <p> Login In</p>
                 </footer>
               </Link>
             </form>

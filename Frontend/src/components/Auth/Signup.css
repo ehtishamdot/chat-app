@@ -1,3 +1,12 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.body {
+  background-color: #ececec ;
+}
 .Main {
   position: absolute;
   top: 50%;
@@ -5,9 +14,9 @@
   transform: translate(-50%, -50%);
   width: 390px;
   height: 600px;
-  border: 2px solid aliceblue;
+  border : 2px solid aliceblue;
   color: #333;
-  box-shadow: 10px 10px 5px;
+  box-shadow: 10px 10px 5px ;
 }
 .title {
   padding: 55px 55px 33px;
@@ -19,7 +28,7 @@
   font-weight: bold;
 }
 .banner {
-  background-color: #333;
+  background-color:#333;
   position: relative;
   left: 25%;
   color: white;
@@ -55,13 +64,8 @@
   border: 0px;
   width: 300px;
   color: white;
-  background: rgba(252, 69, 240, 0.4707692307692307);
-  background: linear-gradient(
-    90deg,
-    rgba(252, 69, 240, 0.4707692307692307) 0%,
-    rgba(204, 29, 253, 0.6984615384615385) 50%,
-    rgba(131, 58, 180, 1) 100%
-  );
+  background: rgba(252,69,240,0.4707692307692307);
+  background: linear-gradient(90deg, rgba(252,69,240,0.4707692307692307) 0%, rgba(204,29,253,0.6984615384615385) 50%,  rgba(131,58,180,1) 100%);
   border-radius: 15px;
   cursor: pointer;
 }
@@ -74,4 +78,13 @@ a {
   padding-left: 8px;
   color: #333;
   font-weight: bolder;
+}
+.button__log {
+  width: 70px;
+}
+.error{
+  text-align: center;
+  font-size: 1rem;
+  font-weight: lighter;
+  color: red;
 }
