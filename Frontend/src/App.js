@@ -18,6 +18,12 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <Navigate replace to={AuthCtx.isLoggedIn ? "chat" : "login"} />
+          }
+        />
         <Route path="chat" element={AuthCtx.isLoggedIn && <Chat />}>
           <Route path=":id" element={<Message />} />
         </Route>

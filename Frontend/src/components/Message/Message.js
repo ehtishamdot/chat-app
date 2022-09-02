@@ -30,7 +30,7 @@ const Message = (props) => {
       );
       const data = await res.json();
       console.log(data);
-      setMessages(data);
+      setMessages(data.message);
     } catch (error) {
       alert(error);
     }
@@ -59,7 +59,7 @@ const Message = (props) => {
     });
 
     socket.on("newMessage", (chat) => {
-      setMessages((prevMessage) => [...prevMessage, chat]);
+      setMessages((prevMessage) => [...prevMessage, chat.message]);
     });
   };
 
@@ -68,21 +68,22 @@ const Message = (props) => {
       (message, pos, self) =>
         self.findIndex((msg) => msg._id === message._id) === pos
     )
-    .map((chat) => {
-      console.log(new Date(chat.message.date).toUTCString());
+    .map((message) => {
+      console.log(message);
+
       return (
         <div
-          key={chat._id}
+          key={message._id}
           className={`${
-            AuthCtx.currentUser._id === chat.message.from
+            AuthCtx.currentUser._id === message.from
               ? "message__from"
               : "message__to"
           }`}
         >
           <div className="message__content">
-            <p>{chat.message.body}</p>
+            <p>{message.body}</p>
             <span className="message__time">
-              {new Date(chat.message.date).toLocaleString("en-US", {
+              {new Date(message.date).toLocaleString("en-US", {
                 hour: "numeric",
                 hour12: true,
                 minute: "numeric",

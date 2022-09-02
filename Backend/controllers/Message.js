@@ -4,7 +4,7 @@ const { Message } = require("../models/Message");
 const getMessages = asyncWrapper(async (req, res) => {
   const { senderId, recieverId } = req.params;
   console.log(senderId, recieverId);
-  const messages = await Message.find({
+  const chat = await Message.findOne({
     $or: [
       {
         recieverId: recieverId,
@@ -15,10 +15,14 @@ const getMessages = asyncWrapper(async (req, res) => {
         senderId: recieverId,
       },
     ],
-  })
-    .sort({ date: -1 })
-    .limit(20);
-  res.send(messages);
+  });
+
+  if (!chat) res.send([]);
+
+  res.send(chat);
+
+  // .sort({ date: -1 })
+  // .limit(20);
 
   // const messages = await Message.find({
   //   recieverId: recieverId,
@@ -27,10 +31,36 @@ const getMessages = asyncWrapper(async (req, res) => {
 });
 
 const sendMessage = asyncWrapper(async (req, res) => {
-  const message = new Message(req.body);
-  await message.save();
-  res.send(message);
+  console.log(req.body);
+  const { senderId, recieverId } = req.body;
+  console.log(senderId, recieverId);
+  let chat = await Message.findOne({
+    $or: [
+      {
+        recieverId: recieverId,
+        senderId: senderId,
+      },
+      {
+        recieverId: senderId,
+        senderId: recieverId,
+      },
+    ],
+  });
+
+  if (!chat) chat = new Message(req.body);
+
+  chat.message.push(req.body.message);
+
+  await chat.save();
+
+  console.log(chat);
+  res.send(chat);
 });
+
+// const pushMessage = asyncWrapper(async (req, res) => {
+//   const message = await Message.findById(req.body.chatId);
+//   if (!message) throw new BadRequest("Chat does not exist");
+// });
 
 module.exports = {
   getMessages,
