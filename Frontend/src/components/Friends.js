@@ -8,7 +8,7 @@ const Friends = () => {
   const AuthCtx = useContext(AuthContext);
 
   const getAllUsers = async () => {
-    const res = await fetch("http://localhost:5000/api/v1/getAllUsers", {
+    const res = await fetch("http://localhost:5000/api/v1/users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -29,15 +29,16 @@ const Friends = () => {
       {users
         .filter((user) => user._id !== AuthCtx.currentUser._id)
         .map((user) => (
-          <Link key={user._id} to={`${user._id}`}>
-            <div className="friends__list__item">
-              <div className="friend__img">
-                <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-              </div>
-              <div className="friend_info">
-                <span>{user.name}</span>
-                <button>Add Friend</button>
-              </div>
+          <Link
+            className="friends__list__item"
+            key={user._id}
+            to={`${user._id}`}
+          >
+            <div className="friend__img">
+              <img src="https://pps.whatsapp.net/v/t61.24694-24/290952396_1010228406344356_1732166173849934192_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AVxYAme4EYV2GvGAUhb14qLrHLhhkd9sClksBAik8NJTwA&oe=63200D01" />
+            </div>
+            <div className="friend_info">
+              <span>{user.name}</span>
             </div>
           </Link>
         ))}

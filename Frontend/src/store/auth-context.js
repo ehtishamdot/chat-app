@@ -26,9 +26,9 @@ const retrieveStoredUserInfo = () => {
 
   console.log(storedUserInfo);
 
-  if (!storedUserInfo) {
-    return null;
-  }
+  // if (!storedUserInfo) {
+  //   return null;
+  // }
 
   return {
     userInfo: storedUserInfo,
@@ -40,7 +40,7 @@ const AuthContextProvider = (props) => {
   const storedUserInfo = retrieveStoredUserInfo();
 
   let initialUserInfo;
-  if (initialUserInfo) {
+  if (storedUserInfo) {
     initialUserInfo = storedUserInfo.userInfo;
   }
 

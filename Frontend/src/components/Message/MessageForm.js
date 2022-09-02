@@ -16,7 +16,7 @@ const MessageForm = (props) => {
 
   return (
     <form onSubmit={onSubmitHandler} style={props.style}>
-      <input value={message} onChange={onChangeHandler} />
+      <input type="text" value={message} onChange={onChangeHandler} />
     </form>
   );
 };

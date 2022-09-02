@@ -15,7 +15,6 @@ import Message from "./components/Message/Message";
 const App = () => {
   const AuthCtx = useContext(AuthContext);
 
-
   return (
     <Router>
       <Routes>

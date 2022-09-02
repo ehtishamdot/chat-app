@@ -5,6 +5,7 @@ import io from "socket.io-client";
 import MessageForm from "./MessageForm";
 import { AuthContext } from "../../store/auth-context";
 import { useParams } from "react-router-dom";
+import MessageHeader from "./MessageHeader";
 const ENDPOINT = "localhost:5000/api/socket";
 
 const Message = (props) => {
@@ -57,8 +58,8 @@ const Message = (props) => {
       }),
     });
 
-    socket.on("newMessage", (message) => {
-      setMessages((prevMessage) => [...prevMessage, message]);
+    socket.on("newMessage", (chat) => {
+      setMessages((prevMessage) => [...prevMessage, chat]);
     });
   };
 
@@ -68,30 +69,38 @@ const Message = (props) => {
         self.findIndex((msg) => msg._id === message._id) === pos
     )
     .map((chat) => {
-      console.log(chat.message);
-
+      console.log(new Date(chat.message.date).toUTCString());
       return (
         <div
           key={chat._id}
           className={`${
             AuthCtx.currentUser._id === chat.message.from
-              ? "message__to"
-              : "message__from"
+              ? "message__from"
+              : "message__to"
           }`}
         >
-          <span className="message__content">
+          <div className="message__content">
             <p>{chat.message.body}</p>
-            <span>{chat.message.date}</span>
-          </span>
+            <span className="message__time">
+              {new Date(chat.message.date).toLocaleString("en-US", {
+                hour: "numeric",
+                hour12: true,
+                minute: "numeric",
+              })}
+            </span>
+          </div>
         </div>
       );
     });
 
   return (
     <section className="chatbox">
+      <MessageHeader currentUserId={userId} />
       <div className="chatbox__messages">
-        {messageTo}
-        <div ref={messagesEndRef} />
+        <div className="chatbox__messages__list">
+          {messageTo}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
       <MessageForm getMessage={onSetMessageHandler} style={{}} />
     </section>

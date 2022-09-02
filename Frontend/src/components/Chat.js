@@ -1,26 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 
 import "./Chat.css";
-
-import io from "socket.io-client";
 import Friends from "./Friends";
-import { MessageContext } from "../store/message-context";
-import MessageHeader from "./Message/MessageHeader";
-import Message from "./Message/Message";
 import { Outlet } from "react-router-dom";
-
-const ENDPOINT = "localhost:5000";
+import ChatSideBar from "./ChatSideBar";
 
 const Chat = () => {
-  const socket = io(ENDPOINT);
-
-  const messageCtx = useContext(MessageContext);
-
   return (
     <div className="chatapp">
-      <MessageHeader />
       <section className="chatapp__body">
-        <Friends />
+        <ChatSideBar />
         <Outlet />
       </section>
       <header />

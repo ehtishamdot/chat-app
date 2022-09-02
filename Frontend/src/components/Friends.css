@@ -1,23 +1,24 @@
 .friends__list {
-  width: 40%;
   height: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   overflow-y: scroll;
-  padding-left: 1rem;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .friends__list__item {
+  padding-left: 1rem;
   width: 100%;
-  height: 5rem;
+  height: 8rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 1rem;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-bottom: 1px solid rgb(234, 234, 234);
+  text-align: center;
 }
 
 .friends__list__item img {
-  width: 3rem;
+  width: 3.8rem;
   border-radius: 50%;
 }
 
@@ -38,4 +39,11 @@
   border: none;
   outline: none;
   padding: 0.4rem 0.8rem;
+}
+
+.friend_info span {
+  text-decoration: none;
+  color: rgb(33, 32, 32);
+  font-size: 1.4rem;
+  font-weight: 500;
 }

@@ -15,7 +15,9 @@ const getMessages = asyncWrapper(async (req, res) => {
         senderId: recieverId,
       },
     ],
-  });
+  })
+    .sort({ date: -1 })
+    .limit(20);
   res.send(messages);
 
   // const messages = await Message.find({

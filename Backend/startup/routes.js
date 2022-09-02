@@ -18,7 +18,7 @@ module.exports = (app) => {
   app.use("/api/v1/messages", message);
   app.use("/api/v1/login", login);
   app.use("/api/v1/register", register);
-  app.use("/api/v1/getAllUsers", getAllUsers);
+  app.use("/api/v1/users", getAllUsers);
 
   app.use(errorHandlerMiddleware);
 };
