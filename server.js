@@ -39,7 +39,10 @@ const port = process.env.PORT;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI);
+    await connectDB(
+      process.env.MONGO_URI ||
+        "mongodb+srv://ehti:1234@nodejsproject.jkebvhi.mongodb.net/Chat-App?retryWrites=true&w=majority"
+    );
     server.listen(port, () => {
       console.log(`Server running at port: ${port}`);
     });
