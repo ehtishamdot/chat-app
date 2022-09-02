@@ -58,41 +58,42 @@ const Message = (props) => {
       }),
     });
 
-    socket.on("newMessage", (chat) => {
-      setMessages((prevMessage) => [...prevMessage, chat.message]);
+    socket.on("newMessage", (message) => {
+      console.log(message);
+      setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
 
-  const messageTo = messages
-    ?.filter(
-      (message, pos, self) =>
-        self.findIndex((msg) => msg._id === message._id) === pos
-    )
-    .map((message) => {
-      console.log(message);
+  // ?.filter(
+  //   (message, pos, self) =>
+  //     self.findIndex((msg) => msg._id === message._id) === pos
+  // )
 
-      return (
-        <div
-          key={message._id}
-          className={`${
-            AuthCtx.currentUser._id === message.from
-              ? "message__from"
-              : "message__to"
-          }`}
-        >
-          <div className="message__content">
-            <p>{message.body}</p>
-            <span className="message__time">
-              {new Date(message.date).toLocaleString("en-US", {
-                hour: "numeric",
-                hour12: true,
-                minute: "numeric",
-              })}
-            </span>
-          </div>
+  const messageTo = messages.map((message, i) => {
+    console.log(message);
+
+    return (
+      <div
+        key={i}
+        className={`${
+          AuthCtx.currentUser._id === message.from
+            ? "message__from"
+            : "message__to"
+        }`}
+      >
+        <div className="message__content">
+          <p>{message.body}</p>
+          <span className="message__time">
+            {new Date(message.date).toLocaleString("en-US", {
+              hour: "numeric",
+              hour12: true,
+              minute: "numeric",
+            })}
+          </span>
         </div>
-      );
-    });
+      </div>
+    );
+  });
 
   return (
     <section className="chatbox">
