@@ -20,14 +20,13 @@ io.of("/api/socket").on("connection", (socket) => {});
 // socket.on --> get the data
 // socket.emit --> post the data
 
-connection.once("open", async () => {
+connection.on("open", async () => {
   console.log("Connected to Stream");
   // const allMessages = await Message.find();
   // socket.emit("getAllMessages", allMessages);
 
   const messagesChangeStream = connection.collection("messages").watch();
   messagesChangeStream.on("change", async (change) => {
-    console.log("running oh");
     switch (change.operationType) {
       case "insert":
         io.of("/api/socket").volatile.emit("newMessage", change.fullDocument);

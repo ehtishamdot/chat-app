@@ -12,7 +12,6 @@ const Chat = () => {
         <ChatSideBar />
         <Outlet />
       </section>
-      <header />
     </div>
   );
 };

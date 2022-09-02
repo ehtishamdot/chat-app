@@ -6,6 +6,19 @@
   width: 100%;
 }
 
+.friends__list::-webkit-scrollbar {
+  width: 1em;
+}
+
+.friends__list::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.friends__list::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 .friends__list__item {
   padding-left: 1rem;
   width: 100%;
@@ -17,7 +30,7 @@
   text-align: center;
 }
 
-.friends__list__item img {
+.friends__list__item svg {
   width: 3.8rem;
   border-radius: 50%;
 }
@@ -46,4 +59,5 @@
   color: rgb(33, 32, 32);
   font-size: 1.4rem;
   font-weight: 500;
+  margin: 0;
 }

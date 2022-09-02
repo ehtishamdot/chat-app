@@ -10,6 +10,7 @@ const ENDPOINT = "localhost:5000/api/socket";
 
 const Message = () => {
   const AuthCtx = useContext(AuthContext);
+
   const { chatId, userId } = useParams();
 
   const messagesEndRef = useRef(null);
@@ -22,15 +23,12 @@ const Message = () => {
   };
 
   useEffect(scrollToBottom, [messages]);
-  console.log("runign yo");
   const getMessages = async () => {
-    console.log(userId);
     try {
       const res = await fetch(
         `http://localhost:5000/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
       );
       const data = await res.json();
-      console.log(data);
       setMessages(data);
     } catch (error) {
       alert(error);
@@ -39,7 +37,7 @@ const Message = () => {
 
   useEffect(() => {
     getMessages();
-  }, [userId]);
+  }, [userId, chatId]);
 
   const onSetMessageHandler = async (message) => {
     await fetch("http://localhost:5000/api/v1/messages", {
@@ -59,11 +57,7 @@ const Message = () => {
     });
 
     socket.on("newMessage", (message) => {
-      console.log(message.to, userId);
-      if (
-        chatId === message.chatId &&
-        (message.to === userId || message.from === userId)
-      )
+      if (chatId === message.chatId)
         setMessages((prevMessage) => [...prevMessage, message]);
     });
   };
@@ -71,10 +65,10 @@ const Message = () => {
   const messageTo = messages
     ?.filter(
       (message, pos, self) =>
-        self.findIndex((msg) => msg._id === message._id) === pos
+        self.findIndex((msg) => msg._id === message._id) === pos &&
+        chatId === message.chatId
     )
     .map((message, i) => {
-      console.log(message);
       return (
         <div
           key={i}

@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../store/auth-context";
 import FriendList from "./FriendList";
 import "./Friends.css";
+import io from "socket.io-client";
+
+const ENDPOINT = "localhost:5000/api/socket";
 
 const Friends = () => {
   const [users, setUsers] = useState([]);
   const AuthCtx = useContext(AuthContext);
+
+  const socket = io(ENDPOINT);
 
   const getAllUsers = async () => {
     const res = await fetch("http://localhost:5000/api/v1/users", {
