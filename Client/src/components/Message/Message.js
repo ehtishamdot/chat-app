@@ -1,15 +1,27 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import "./Message.css";
 
+import messagetone from "../../audio/messagetone.mp3";
+
 import io from "socket.io-client";
 import MessageForm from "./MessageForm";
 import { AuthContext } from "../../store/auth-context";
 import { useParams } from "react-router-dom";
 import MessageHeader from "./MessageHeader";
+import { Howl } from "howler";
+
 const ENDPOINT = "https://ssuetchatting.herokuapp.com/api/socket";
 
 const Message = () => {
   const AuthCtx = useContext(AuthContext);
+
+  // const messageTonePlay = (src) => {
+  //   const sound = new Howl({
+  //     src,
+  //     html5: true,
+  //   });
+  //   sound.play();
+  // };
 
   const { chatId, userId } = useParams();
 
