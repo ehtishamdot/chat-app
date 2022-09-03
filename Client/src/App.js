@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-  HashRouter,
 } from "react-router-dom";
 
 import Chat from "./components/Chat";
