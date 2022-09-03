@@ -25,7 +25,7 @@ const SideBarHeader = () => {
       <button
         onClick={(event) => {
           AuthCtx.logout();
-          navigate("/login");
+          navigate("#/login");
         }}
         className="btn__logout"
       >{`Logout ${AuthCtx.currentUser.name}`}</button>

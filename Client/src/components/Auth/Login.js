@@ -49,7 +49,7 @@ const Login = () => {
       console.log(user);
       AuthCtx.getUser(user);
 
-      navigate("/chat");
+      navigate("#/chat");
     }
   };
 

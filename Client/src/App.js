@@ -22,28 +22,22 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Navigate replace to={AuthCtx.isLoggedIn ? "chat" : "login"} />
+            <Navigate replace to={AuthCtx.isLoggedIn ? "#/chat" : "#/login"} />
           }
         />
 
         <Route
           path="*"
           element={
-            <Navigate replace to={AuthCtx.isLoggedIn ? "chat" : "login"} />
+            <Navigate replace to={AuthCtx.isLoggedIn ? "#/chat" : "#/login"} />
           }
         />
 
-        <Route
-          path="/"
-          element={
-            AuthCtx.isLoggedIn ? <Navigate exact to={"chat"} /> : <Signup />
-          }
-        />
-        <Route path="chat" element={AuthCtx.isLoggedIn && <Chat />}>
-          <Route path=":chatId/:userId" element={<Message />} />
+        <Route path="#/chat" element={AuthCtx.isLoggedIn && <Chat />}>
+          <Route path="#/:chatId/:userId" element={<Message />} />
         </Route>
-        <Route path="login" element={!AuthCtx.isLoggedIn && <Login />} />
-        <Route path="Signup" element={!AuthCtx.isLoggedIn && <Signup />} />
+        <Route path="#/login" element={!AuthCtx.isLoggedIn && <Login />} />
+        <Route path="#/Signup" element={!AuthCtx.isLoggedIn && <Signup />} />
       </Routes>
     </Router>
   );

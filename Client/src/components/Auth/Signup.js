@@ -54,7 +54,7 @@ const Signup = () => {
 
       if (data.token) {
         AuthCtx.login(data.token);
-        navigate("/chat");
+        navigate("#/chat");
       }
     };
     postUser();
