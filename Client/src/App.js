@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate,
+  HashRouter,
 } from "react-router-dom";
 
 import Chat from "./components/Chat";
@@ -22,22 +23,22 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Navigate replace to={AuthCtx.isLoggedIn ? "#/chat" : "#/login"} />
+            <Navigate replace to={AuthCtx.isLoggedIn ? "chat" : "login"} />
           }
         />
 
         <Route
           path="*"
           element={
-            <Navigate replace to={AuthCtx.isLoggedIn ? "#/chat" : "#/login"} />
+            <Navigate replace to={AuthCtx.isLoggedIn ? "chat" : "login"} />
           }
         />
 
-        <Route path="#/chat" element={AuthCtx.isLoggedIn && <Chat />}>
-          <Route path="#/:chatId/:userId" element={<Message />} />
+        <Route path="chat" element={AuthCtx.isLoggedIn && <Chat />}>
+          <Route path=":chatId/:userId" element={<Message />} />
         </Route>
-        <Route path="#/login" element={!AuthCtx.isLoggedIn && <Login />} />
-        <Route path="#/Signup" element={!AuthCtx.isLoggedIn && <Signup />} />
+        <Route path="login" element={!AuthCtx.isLoggedIn && <Login />} />
+        <Route path="Signup" element={!AuthCtx.isLoggedIn && <Signup />} />
       </Routes>
     </Router>
   );
