@@ -27,7 +27,7 @@ const Login = () => {
 
     const getToken = async () => {
       const res = await fetch(
-        "https://ssuetchatting.herokuapp.com/api/v1/login",
+        "http://localhost:5000/api/v1/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

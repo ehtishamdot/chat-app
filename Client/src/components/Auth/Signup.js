@@ -37,7 +37,7 @@ const Signup = () => {
 
     const postUser = async () => {
       const rawResponse = await fetch(
-        "https://ssuetchatting.herokuapp.com/api/v1/register",
+        "http://localhost:5000/api/v1/register",
         {
           method: "POST",
           headers: {

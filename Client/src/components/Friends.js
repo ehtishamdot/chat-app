@@ -4,7 +4,7 @@ import FriendList from "./FriendList";
 import "./Friends.css";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://ssuetchatting.herokuapp.com//api/socket";
+const ENDPOINT = "http://localhost:5000//api/socket";
 
 const Friends = () => {
   const [users, setUsers] = useState([]);
@@ -14,7 +14,7 @@ const Friends = () => {
 
   const getAllUsers = async () => {
     const res = await fetch(
-      "https://ssuetchatting.herokuapp.com/api/v1/users",
+      "http://localhost:5000/api/v1/users",
       {
         method: "GET",
         headers: {

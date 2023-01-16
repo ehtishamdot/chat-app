@@ -6,7 +6,7 @@ const FriendList = ({ userInfo, currentUserId }) => {
   const [chatId, setChatId] = useState([]);
 
   useEffect(() => {
-    fetch(`https://ssuetchatting.herokuapp.com/api/v1/chat/${currentUserId}/${userInfo._id}`)
+    fetch(`http://localhost:5000/api/v1/chat/${currentUserId}/${userInfo._id}`)
       .then((res) => res.json())
       .then((data) => setChatId(data._id));
   }, [userInfo]);

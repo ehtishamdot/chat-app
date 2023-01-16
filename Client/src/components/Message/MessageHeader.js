@@ -10,7 +10,7 @@ const MessageHeader = (props) => {
   const getCurrentUser = async () => {
     try {
       const res = await fetch(
-        `https://ssuetchatting.herokuapp.com/api/v1/users/${userId}`
+        `http://localhost:5000/api/v1/users/${userId}`
       );
       const data = await res.json();
       setUserInfo(data);

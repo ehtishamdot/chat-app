@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import MessageHeader from "./MessageHeader";
 import { Howl } from "howler";
 
-const ENDPOINT = "https://ssuetchatting.herokuapp.com/api/socket";
+const ENDPOINT = "http://localhost:5000/api/socket";
 
 const Message = () => {
   const AuthCtx = useContext(AuthContext);
@@ -38,7 +38,7 @@ const Message = () => {
   const getMessages = async () => {
     try {
       const res = await fetch(
-        `https://ssuetchatting.herokuapp.com/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
+        `http://localhost:5000/api/v1/messages/${AuthCtx.currentUser._id}/${userId}`
       );
       const data = await res.json();
       setMessages(data);
@@ -52,7 +52,7 @@ const Message = () => {
   }, [userId, chatId]);
 
   const onSetMessageHandler = async (message) => {
-    await fetch("https://ssuetchatting.herokuapp.com/api/v1/messages", {
+    await fetch("http://localhost:5000/api/v1/messages", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

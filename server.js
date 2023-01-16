@@ -35,7 +35,7 @@ connection.on("open", async () => {
   });
 });
 
-const port = process.env.PORT;
+const port = 5000;
 
 const start = async () => {
   try {
